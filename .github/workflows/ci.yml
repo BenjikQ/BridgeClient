@@ -1,0 +1,33 @@
+name: CI
+
+on:
+  - push
+
+jobs:
+  ci:
+    strategy:
+      fail-fast: false
+      matrix:
+        python-version: [ "3.11" ]
+        poetry-version: [ "1.4.2" ]
+        os: [ "ubuntu-22.04", "windows-2022" ]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - uses: actions/checkout@v3
+      - uses: actions/setup-python@v4
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install poetry
+        uses: abatilo/actions-poetry@v2
+        with:
+          poetry-version: ${{ matrix.poetry-version }}
+      - name: Install dependencies
+        run: |
+          poetry config virtualenvs.in-project true
+          poetry install
+      - name: Install OpenGL drivers
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt install -y libgl1-mesa-dev
+      - name: Analyze code
+        uses: pre-commit/action@v3.0.0

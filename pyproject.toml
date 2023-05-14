@@ -1,0 +1,66 @@
+[tool.poetry]
+name = "bridgeclient"
+version = "0.1.0"
+description = ""
+authors = ["Benjik"]
+readme = "README.rst"
+
+[tool.poetry.dependencies]
+python = "^3.11"
+invoke = "^2.1.1"
+pyqt6 = "^6.5.0"
+
+[tool.poetry.group.dev.dependencies]
+types-invoke = "^2.0.0.7"
+mypy = "^1.3.0"
+pylint = "^2.17.4"
+vulture = "^2.7"
+black = { extras = ["d"], version = "^23.3.0" }
+safety = "^2.3.5"
+ruff = "^0.0.267"
+
+[tool.mypy]
+python_version = 3.11
+exclude = ["^bridge/ui_.*\\.py$"]
+strict = true
+disallow_any_unimported = true
+no_implicit_optional = true
+show_error_codes = true
+
+[[tool.mypy.overrides]]
+module = ["bridge.ui_mainwindow"]
+follow_imports = "silent"
+
+[tool.pylint]
+disable = ["C"]
+ignore-patterns = "ui_.*\\.py"
+extension-pkg-whitelist = "PyQt6"
+
+[tool.pylint.format]
+max-line-length = "88"
+
+[tool.vulture]
+exclude = ["tasks.py", "*/ui_*.py"]
+paths = ["bridge", "tests"]
+sort_by_size = true
+
+[tool.black]
+target-version = ["py311"]
+extend-exclude = "ui_.*\\.py"
+
+[tool.ruff]
+select = ["ALL"]
+ignore = ["D", "T20"]
+line-length = 88
+target-version = "py311"
+extend-exclude = ["ui_*.py"]
+src = ["bridge", "tests"]
+
+[tool.ruff.isort]
+force-sort-within-sections = true
+order-by-type = true
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"
