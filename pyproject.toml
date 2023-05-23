@@ -21,14 +21,13 @@ ruff = "^0.0.267"
 
 [tool.mypy]
 python_version = 3.11
-exclude = ["^bridge/ui_.*\\.py$"]
 strict = true
 disallow_any_unimported = true
 no_implicit_optional = true
 show_error_codes = true
 
 [[tool.mypy.overrides]]
-module = ["bridge.ui_mainwindow"]
+module = ["ui.ui_mainwindow"]
 follow_imports = "silent"
 
 [tool.pylint]
@@ -50,7 +49,7 @@ extend-exclude = "ui_.*\\.py"
 
 [tool.ruff]
 select = ["ALL"]
-ignore = ["D", "T20"]
+ignore = ["D", "T20", "ANN101"]
 line-length = 88
 target-version = "py311"
 extend-exclude = ["ui_*.py"]

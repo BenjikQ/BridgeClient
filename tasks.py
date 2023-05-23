@@ -5,15 +5,16 @@ from invoke import Context, task
 
 ui_file_extension = ".ui"
 converted_file_prefix = "ui_"
+ui_path = Path("bridge/ui")
 
 ui_files = [
     ui_file
-    for ui_file in Path("bridge/").iterdir()
+    for ui_file in ui_path.iterdir()
     if ui_file.is_file() and ui_file.suffix == ui_file_extension
 ]
 converted_files = [
     file
-    for file in Path("bridge/").iterdir()
+    for file in ui_path.iterdir()
     if file.is_file() and file.name[:3] == converted_file_prefix
 ]
 
@@ -28,6 +29,11 @@ def convert_ui(context: Context) -> float:
         context.run(f"pyuic6 {ui_file} -o {ui_file.parent}/ui_{ui_file.stem}.py")
         end = timer()
         execution_time += end - start
+
+    if len(ui_files) == 1:
+        print("1 file has been recompiled")
+    else:
+        print(f"{len(ui_files)} have been recompiled")
     return execution_time
 
 

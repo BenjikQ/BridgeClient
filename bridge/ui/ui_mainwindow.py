@@ -1,4 +1,4 @@
-# Form implementation generated from reading ui file 'bridge\mainwindow.ui'
+# Form implementation generated from reading ui file 'bridge\ui\mainwindow.ui'
 #
 # Created by: PyQt6 UI code generator 6.5.0
 #
